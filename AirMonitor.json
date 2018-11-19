@@ -1,0 +1,39 @@
+{
+  "meters": [
+              {
+                  "id":"ftp",
+                  "key":"GXIDRLLQ9JYUQRY7",
+                  "period_minutes":"15",
+                  "com_port":"COM3",
+                  "name":"FTP Room"
+              },
+              {
+                  "id":"cst",
+                  "key":"QJRUDTSKMLUA359E",
+                  "period_minutes":"15",
+                  "com_port":"COM4",
+                  "name":"CST Room"
+              },
+              {
+                  "id":"outside",
+                  "key":"KKR7W5J3BOT15EYM",
+                  "period_minutes":"15",
+                  "com_port":"COM3",
+                  "name":"Katowice outside"
+              },
+              {
+                  "id":"fake",
+                  "key":"ZV8LFYCD6VM4PF7Q",
+                  "period_minutes":"15",
+                  "com_port":"COM3",
+                  "name":"Fake location"
+              },
+			  {
+                  "id":"outside_linux",
+                  "key":"ZV8LFYCD6VM4PF7Q",
+                  "period_minutes":"15",
+                  "com_port":"/dev/ttyUSB0",
+                  "name":"Katowice outside"
+              }
+            ]
+}
