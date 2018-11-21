@@ -5,35 +5,45 @@
                   "key":"GXIDRLLQ9JYUQRY7",
                   "period_minutes":"15",
                   "com_port":"COM3",
-                  "name":"FTP Room"
+                  "name":"FTP Room",
+                  "meter":"SDL607",
+                  "target":"ThingSpeakTarget"
               },
               {
                   "id":"cst",
                   "key":"QJRUDTSKMLUA359E",
                   "period_minutes":"15",
                   "com_port":"COM4",
-                  "name":"CST Room"
+                  "name":"CST Room",
+                  "meter":"SDL607",
+                  "target":"ThingSpeakTarget"
               },
               {
                   "id":"outside",
                   "key":"KKR7W5J3BOT15EYM",
                   "period_minutes":"15",
                   "com_port":"COM3",
-                  "name":"Katowice outside"
+                  "name":"Seb outside",
+                  "meter":"SDL607",
+                  "target":"ThingSpeakTarget"
               },
               {
                   "id":"fake",
-                  "key":"ZV8LFYCD6VM4PF7Q",
-                  "period_minutes":"15",
+                  "key":"O3FNBKBZY90KW0YV",
+                  "period_minutes":"0.1",
                   "com_port":"COM3",
-                  "name":"Fake location"
+                  "name":"Fake location",
+                  "meter":"FakeMeter",
+                  "target":"ThingSpeakTarget"
               },
 			  {
-                  "id":"outside_linux",
+                  "id":"home",
                   "key":"ZV8LFYCD6VM4PF7Q",
                   "period_minutes":"15",
                   "com_port":"/dev/ttyUSB0",
-                  "name":"Katowice outside"
+                  "name":"Katowice outside",
+                  "meter":"SDL607",
+                  "target":"ThingSpeakTarget"
               }
             ]
 }

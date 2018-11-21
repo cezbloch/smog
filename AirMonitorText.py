@@ -2,6 +2,11 @@ import argparse
 from Engine import AirMonitorEngine
 from colorama import Fore, Back, Style, init
 from Data import get_2_5_color, get_10_color
+from Metrics import Metrics
+from ConfigReader import read_config
+from SDL607 import SDL607
+from FakeMeter import FakeMeter
+from ThingSpeakTarget import ThingSpeakTarget, NullTarget
 
 
 def color_to_colorama(color):
@@ -30,13 +35,31 @@ def present_values_callback(values):
     print pm25 + pm10
 
 
+def create_smog_meter(meter_type, port):
+    if meter_type == "FakeMeter":
+        return FakeMeter()
+    else:
+        return SDL607(port)
+
+
+def create_data_target(target_type, key):
+    if target_type == "NullTarget":
+        return NullTarget()
+    else:
+        return ThingSpeakTarget(key)
+
+
 def main():
     init()
     parser = argparse.ArgumentParser(description='Air Monitor')
     parser.add_argument("location")
-    parser.add_argument("--test")
     arguments = parser.parse_args()
-    engine = AirMonitorEngine(arguments, present_values_callback)
+    config = read_config(arguments.location)
+    engine = AirMonitorEngine(create_smog_meter(config["meter"], config["com_port"]),
+                              create_data_target(config["target"], config["key"]),
+                              present_values_callback,
+                              Metrics(),
+                              config["period_minutes"])
     engine.loop()
 
 
