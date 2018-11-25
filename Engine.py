@@ -37,9 +37,3 @@ class AirMonitorEngine(object):
 
         result = PollutantsResult(pollutants, self.last_averages)
         self.callback(result)
-
-    def loop(self):
-        while True:
-            self.probe()
-            time.sleep(1)
-

@@ -1,12 +1,12 @@
 import argparse
 from Engine import AirMonitorEngine
-from colorama import Fore, Back, Style, init
+from colorama import Fore, Style, init
 from Data import get_2_5_color, get_10_color
 from Metrics import Metrics
 from ConfigReader import read_config
-from SDL607 import SDL607
-from FakeMeter import FakeMeter
-from ThingSpeakTarget import ThingSpeakTarget, NullTarget
+from Meters import create_smog_meter
+from DataTargets import create_data_target
+from time import sleep
 
 
 def color_to_colorama(color):
@@ -33,20 +33,7 @@ def present_values_callback(values):
     pm25 = "PM 2.5 = " + color_text_2_5(values.momentarily.pm_2_5) + " ({})".format(color_text_2_5(values.average.pm_2_5))
     pm10 = " PM 10 = " + color_text_10(values.momentarily.pm_10) + " ({})".format(color_text_10(values.average.pm_10))
     print pm25 + pm10
-
-
-def create_smog_meter(meter_type, port):
-    if meter_type == "FakeMeter":
-        return FakeMeter()
-    else:
-        return SDL607(port)
-
-
-def create_data_target(target_type, key):
-    if target_type == "NullTarget":
-        return NullTarget()
-    else:
-        return ThingSpeakTarget(key)
+    sleep(0.5)
 
 
 def main():
@@ -60,7 +47,10 @@ def main():
                               present_values_callback,
                               Metrics(),
                               config["period_minutes"])
-    engine.loop()
+
+    while True:
+        engine.probe()
+        sleep(0.03)
 
 
 if __name__ == "__main__":

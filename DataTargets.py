@@ -1,6 +1,13 @@
 import urllib
 
 
+def create_data_target(target_type, key):
+    if target_type == "NullTarget":
+        return NullTarget()
+    else:
+        return ThingSpeakTarget(key)
+
+
 class ThingSpeakTarget(object):
     def __init__(self, key):
         self.key = key

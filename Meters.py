@@ -2,6 +2,15 @@ import serial
 import re
 import struct
 from Data import Pollutants
+import random
+from time import time
+
+
+def create_smog_meter(meter_type, port):
+    if meter_type == "FakeMeter":
+        return FakeMeter()
+    else:
+        return SDL607(port)
 
 
 class SDL607(object):
@@ -34,3 +43,22 @@ class SDL607(object):
 
                 return pollutants
             return None
+
+
+class FakeMeter(object):
+    def __init__(self):
+        self.last_update_time = time()
+        self.period_in_seconds = 1
+
+    def get_values(self):
+        now = time()
+        time_elapsed = now - self.last_update_time
+        if time_elapsed > self.period_in_seconds:
+            pollutants = Pollutants()
+            pollutants.pm_2_5 = random.uniform(1.0, 200.0)
+            pollutants.pm_10 = random.uniform(1.0, 300.0)
+            self.last_update_time = time()
+            return pollutants
+
+        return None
+
