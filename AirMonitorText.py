@@ -2,7 +2,7 @@ import argparse
 from Engine import AirMonitorEngine
 from colorama import Fore, Style, init
 from Data import get_2_5_color, get_10_color
-from Metrics import Metrics
+from Metrics import Metrics, get_aqi_color
 from ConfigReader import read_config
 from Meters import create_smog_meter
 from DataTargets import create_data_target
@@ -29,10 +29,20 @@ def color_text_10(value):
     return (color_to_colorama(get_10_color(value))) + "{0:.1f}".format(value) + (Style.RESET_ALL)
 
 
+def color_text_aqi(value):
+    return (color_to_colorama(get_aqi_color(value))) + "{0:.0f}".format(value) + (Style.RESET_ALL)
+
+
 def present_values_callback(values):
-    pm25 = "PM 2.5 = " + color_text_2_5(values.momentarily.pm_2_5) + " ({})".format(color_text_2_5(values.average.pm_2_5))
-    pm10 = " PM 10 = " + color_text_10(values.momentarily.pm_10) + " ({})".format(color_text_10(values.average.pm_10))
-    print pm25 + pm10
+    aqi = "AQI = {} ({})".format(color_text_aqi(values.aqi[0]),
+                                 color_text_aqi(values.aqi[1]))
+
+    pm25 = " PM 2.5 = {} ({})".format(color_text_2_5(values.momentarily.pm_2_5),
+                                      color_text_2_5(values.average.pm_2_5))
+
+    pm10 = " PM 10 = {} ({})".format(color_text_10(values.momentarily.pm_10),
+                                     color_text_10(values.average.pm_10))
+    print aqi + pm25 + pm10
     sleep(0.5)
 
 
