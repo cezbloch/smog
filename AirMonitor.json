@@ -2,28 +2,10 @@
   "meters": [
               {
                   "id":"ftp",
-                  "key":"GXIDRLLQ9JYUQRY7",
+                  "key":"CGICU3YK4YTBXRXK",
                   "period_minutes":"15",
                   "com_port":"COM3",
                   "name":"FTP Room",
-                  "meter":"SDL607",
-                  "target":"ThingSpeakTarget"
-              },
-              {
-                  "id":"cst",
-                  "key":"QJRUDTSKMLUA359E",
-                  "period_minutes":"15",
-                  "com_port":"COM4",
-                  "name":"CST Room",
-                  "meter":"SDL607",
-                  "target":"ThingSpeakTarget"
-              },
-              {
-                  "id":"outside",
-                  "key":"KKR7W5J3BOT15EYM",
-                  "period_minutes":"15",
-                  "com_port":"COM3",
-                  "name":"Seb outside",
                   "meter":"SDL607",
                   "target":"ThingSpeakTarget"
               },
