@@ -7,9 +7,9 @@ class Metrics(object):
 
     def add_measurement(self, pollutants):
         if self.samples is None:
-            self.samples = np.array([pollutants.pm_2_5, pollutants.pm_10])
+            self.samples = np.array(pollutants)
         else:
-            self.samples = np.vstack((self.samples, np.array([[pollutants.pm_2_5, pollutants.pm_10]])))
+            self.samples = np.vstack((self.samples, np.array([pollutants])))
 
     def average(self):
         average = self.samples.mean(axis=0)
@@ -36,11 +36,11 @@ def get_aqi_color(aqi):
 def calculate_aqi(value, levels):
     index = 0
     for level in levels:
-        if value < level:
-            c_low = levels[index]
-            c_high = levels[index+1]
-            i_low = index_breakpoints[index]
-            i_high = index_breakpoints[index+1] - 1
+        if value <= level:
+            c_low = levels[index - 1]
+            c_high = levels[index]
+            i_low = index_breakpoints[index - 1]
+            i_high = index_breakpoints[index] - 1
             aqi = (i_high - i_low) * (value - c_low) / (c_high - c_low) + i_low
             return aqi
         index += 1
@@ -48,10 +48,9 @@ def calculate_aqi(value, levels):
 
 
 class AQI(object):
-    def __init__(self, pollutants):
-        self.pollutants = pollutants
-        self.aqi_2_5 = calculate_aqi(self.pollutants.pm_2_5, breakpoints_2_5)
-        self.aqi_10 = calculate_aqi(self.pollutants.pm_10, breakpoints_10)
+    def __init__(self, pm_2_5, pm_10):
+        self.aqi_2_5 = calculate_aqi(pm_2_5, breakpoints_2_5)
+        self.aqi_10 = calculate_aqi(pm_10, breakpoints_10)
 
     def get_index(self):
         aqi = max(self.aqi_2_5, self.aqi_10)

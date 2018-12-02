@@ -8,11 +8,9 @@ from array import array
 from Tkinter import *
 
 from Engine import AirMonitorEngine
-from Metrics import Metrics
 from ConfigReader import read_config
 from Meters import create_smog_meter
 from DataTargets import create_data_target
-from Data import PollutantsResult
 
 
 def click(x, y):
@@ -74,9 +72,8 @@ class AirMonitorApp(Tk):
         self.engine = AirMonitorEngine(create_smog_meter(config["meter"], config["com_port"]),
                                        create_data_target(config["target"], config["key"]),
                                        self.update_result,
-                                       Metrics(),
                                        config["period_minutes"])
-        self.smog_values = PollutantsResult()
+        self.smog_values = None
 
         self.configFileName = 'AirMonitor.ini'
         self.appConfig = ConfigParser.ConfigParser()
@@ -117,13 +114,13 @@ class AirMonitorApp(Tk):
         #self.canvas.grid(row = 1, column = 0, columnspan = 2, sticky=W+E)
         self.rect = self.canvas.create_rectangle(0, 0, 150, 250, fill = "black")
 
-        self.pm2_5Label = TextLabel(mainFrame,  width=400, height=100, text='00 PM2.5', anchor=W, bd=1, justify=CENTER, font=("Helvetica", 52), bg="black" ,fg="green" )
+        self.pm2_5Label = TextLabel(mainFrame,  width=400, height=100, text='00 PM2.5', anchor=W, bd=1, justify=CENTER, font=("Helvetica", 50), bg="black" ,fg="green" )
         self.pm2_5Label.grid(row = 1, column = 0, columnspan = 2, sticky=W+E+S+N)
-        self.pm2_5_average_label = TextLabel(mainFrame,  width=400, height=100, text='Avg PM2.5', anchor=W, bd=1, justify=CENTER, font=("Helvetica", 52), bg="black" ,fg="green" )
+        self.pm2_5_average_label = TextLabel(mainFrame,  width=400, height=100, text='Avg -', anchor=W, bd=1, justify=CENTER, font=("Helvetica", 50), bg="black" ,fg="green" )
         self.pm2_5_average_label.grid(row = 1, column = 2, columnspan = 2, sticky=W+E+S+N)
-        self.pm10Label = TextLabel(mainFrame,  width=400, height=100, text='00 PM10', anchor=W, bd=1, justify=CENTER, font=("Helvetica", 52), bg="black" ,fg="green" )
+        self.pm10Label = TextLabel(mainFrame,  width=400, height=100, text='00 PM10', anchor=W, bd=1, justify=CENTER, font=("Helvetica", 50), bg="black" ,fg="green" )
         self.pm10Label.grid(row = 2, column = 0, columnspan = 2, sticky=W+E+S+N)
-        self.pm10_average_label = TextLabel(mainFrame,  width=400, height=100, text='Avg PM10', anchor=W, bd=1, justify=CENTER, font=("Helvetica", 52), bg="black" ,fg="green" )
+        self.pm10_average_label = TextLabel(mainFrame,  width=400, height=100, text='Avg -', anchor=W, bd=1, justify=CENTER, font=("Helvetica", 50), bg="black" ,fg="green" )
         self.pm10_average_label.grid(row = 2, column = 2, columnspan = 2, sticky=W+E+S+N)
 
 
@@ -192,15 +189,17 @@ class AirMonitorApp(Tk):
     def update_ui(self):
         self.engine.probe()
         result = self.smog_values
-        color_2_5 = get_2_5_color(result.momentarily.pm_2_5)
-        color_10 = get_10_color(result.momentarily.pm_10)
-        color_2_5_avg = get_2_5_color(result.average.pm_2_5)
-        color_10_avg = get_10_color(result.average.pm_10)
+        if result is not None:
+            color_2_5 = get_2_5_color(result.momentarily[0])
+            color_10 = get_10_color(result.momentarily[1])
+            self.pm2_5Label.text_widget.config(text="%.1f PM 2.5" % result.momentarily[0], fg=color_2_5)
+            self.pm10Label.text_widget.config(text="%.1f PM 10" % result.momentarily[1], fg=color_10)
 
-        self.pm2_5Label.text_widget.config(text="%.1f PM 2.5" % result.momentarily.pm_2_5, fg=color_2_5)
-        self.pm10Label.text_widget.config(text="%.1f PM 10" % result.momentarily.pm_10, fg=color_10)
-        self.pm2_5_average_label.text_widget.config(text="Avg %.1f" % result.average.pm_2_5, fg=color_2_5_avg)
-        self.pm10_average_label.text_widget.config(text="Avg %.1f" % result.average.pm_10, fg=color_10_avg)
+            if result.average is not None:
+                color_2_5_avg = get_2_5_color(result.average[0])
+                color_10_avg = get_10_color(result.average[1])
+                self.pm2_5_average_label.text_widget.config(text="Avg %.1f" % result.average[0], fg=color_2_5_avg)
+                self.pm10_average_label.text_widget.config(text="Avg %.1f" % result.average[1], fg=color_10_avg)
 
         self.after(33, self.update_ui)
 

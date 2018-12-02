@@ -1,17 +1,7 @@
-from Metrics import AQI
-
-
-class Pollutants(object):
-    def __init__(self, pm2_5=0.0, pm10=0.0):
-        self.pm_2_5 = pm2_5
-        self.pm_10 = pm10
-
-
 class PollutantsResult(object):
-    def __init__(self, momentarily=Pollutants(), average=Pollutants()):
+    def __init__(self, momentarily, average):
         self.momentarily = momentarily
         self.average = average
-        self.aqi = (AQI(momentarily).get_index(), AQI(average).get_index())
 
 
 def get_2_5_color_india(value):
