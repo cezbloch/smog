@@ -9,9 +9,8 @@ from DataTargets import create_data_target
 
 
 class AirMonitorGui(Tkinter.Tk):
-    def __init__(self,parent):
-        Tkinter.Tk.__init__(self, parent)
-        self.parent = parent
+    def __init__(self):
+        Tkinter.Tk.__init__(self)
         self.initialize()
 
         parser = argparse.ArgumentParser(description='Air Monitor')
@@ -100,7 +99,7 @@ class AirMonitorGui(Tkinter.Tk):
 
 
 if __name__ == "__main__":
-    app = AirMonitorGui(None)
+    app = AirMonitorGui()
     app.title("Air Quality Monitor")
     app.after(33, app.update_ui)
     app.mainloop()
