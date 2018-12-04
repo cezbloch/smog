@@ -1,4 +1,4 @@
-from Data import get_2_5_color, get_10_color
+from Metrics import get_2_5_color, get_10_color
 import win32api
 import win32con
 import time
@@ -86,7 +86,6 @@ class AirMonitorApp(Tk):
         self.appConfig.read(self.configFileName)
 
         self.overrideredirect(True)
-        self.resizable(width=FALSE, height=FALSE)
         self.wm_attributes("-topmost", 1)
 
         mainFrame = Frame(self)
