@@ -9,7 +9,7 @@ from Tkinter import *
 
 from Engine import AirMonitorEngine
 from ConfigReader import read_config
-from Meters import create_smog_meter
+from SmogMeters import create_smog_meter
 from DataTargets import create_data_target
 
 

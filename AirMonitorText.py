@@ -1,10 +1,9 @@
 import argparse
 from Engine import AirMonitorEngine
 from colorama import Fore, Style, init
-from Data import get_2_5_color, get_10_color
-from Metrics import get_aqi_color
+from Metrics import get_aqi_color, get_2_5_color, get_10_color
 from ConfigReader import read_config
-from Meters import create_smog_meter
+from SmogMeters import create_smog_meter
 from DataTargets import create_data_target
 from time import sleep
 

@@ -72,4 +72,3 @@ class FakeMeter(object):
             return [pm_2_5, pm_10]
 
         return None
-
