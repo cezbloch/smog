@@ -4,6 +4,7 @@ from colorama import Fore, Style, init
 from Metrics import get_aqi_color, get_2_5_color, get_10_color
 from ConfigReader import read_config
 from SmogMeters import create_smog_meter
+from WeatherMeters import create_weather_meter
 from DataTargets import create_data_target
 from time import sleep
 
@@ -51,19 +52,36 @@ def present_values_callback(values):
     sleep(0.5)
 
 
+def present_weather_callback(values):
+    print 'Temp: {0:0.1f} C  Humidity: {1:0.1f} %'.format(values.momentarily[0], values.momentarily[1])
+
+
 def main():
     init()
     parser = argparse.ArgumentParser(description='Air Monitor')
     parser.add_argument("location")
     arguments = parser.parse_args()
     config = read_config(arguments.location)
-    engine = AirMonitorEngine(create_smog_meter(config["meter"], config["com_port"]),
-                              create_data_target(config["target"], config["key"]),
-                              present_values_callback,
-                              config["period_minutes"])
+    engines = []
+
+    if "meter" in config.keys():
+        smog_engine = AirMonitorEngine(create_smog_meter(config["meter"], config["com_port"]),
+                                       create_data_target(config["target"], config["key"]),
+                                       present_values_callback,
+                                       config["period_minutes"])
+        engines.append(smog_engine)
+
+    if "weather_meter" in config.keys():
+        weather_engine = AirMonitorEngine(create_weather_meter(config["weather_meter"]),
+                                          create_data_target(config["target"], config["weather_key"]),
+                                          present_weather_callback,
+                                          config["period_minutes"])
+        engines.append(weather_engine)
 
     while True:
-        engine.probe()
+        for engine in engines:
+            engine.probe()
+
         sleep(0.03)
 
 

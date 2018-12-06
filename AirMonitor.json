@@ -3,7 +3,7 @@
               {
                   "id":"ftp",
                   "key":"CGICU3YK4YTBXRXK",
-                  "period_minutes":"15",
+                  "period_minutes":"60",
                   "com_port":"COM3",
                   "name":"FTP Room",
                   "meter":"SDL607",
@@ -16,15 +16,19 @@
                   "com_port":"COM3",
                   "name":"Fake location",
                   "meter":"FakeMeter",
+                  "weather_meter":"FakeTemperaturePressureMeter",
+                  "weather_key":"TY3W8ILLELQH3WPJ",
                   "target":"ThingSpeakTarget"
               },
 			  {
                   "id":"home",
                   "key":"ZV8LFYCD6VM4PF7Q",
-                  "period_minutes":"15",
+                  "period_minutes":"60",
                   "com_port":"/dev/ttyUSB0",
                   "name":"Katowice outside",
                   "meter":"SDL607",
+                  "weather_meter":"DHT11TemperaturePressureMeter",
+                  "weather_key":"TY3W8ILLELQH3WPJ",
                   "target":"ThingSpeakTarget"
               }
             ]

@@ -25,7 +25,7 @@ colors = ("green", "yellow", "orange", "red", "purple", "maroon", "maroon", "bla
 
 
 def get_color(value, breakpoints):
-    index = 0
+    index = -1
     for low in breakpoints:
         if value < low:
             return colors[index]

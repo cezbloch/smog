@@ -2,6 +2,13 @@ from time import time, sleep
 import random
 
 
+def create_weather_meter(meter_type):
+    if meter_type == "FakeTemperaturePressureMeter":
+        return FakeTemperaturePressureMeter()
+    else:
+        return DHT11TemperaturePressureMeter()
+
+
 class FakeTemperaturePressureMeter(object):
     def __init__(self):
         self.last_update_time = time()
