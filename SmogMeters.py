@@ -33,17 +33,25 @@ class SDL607(object):
         self.port_number = 0
         self.buffer = ""
         self.inputPattern = re.compile('\\xAA.{17}\\xAB', re.DOTALL)
-        self.serial_port = serial.Serial(self.com_port, 9600, timeout=0, parity=serial.PARITY_NONE, stopbits=1, bytesize=8)
+        self.serial_port = None
+        self.recreate_serial_port()
 
-    def reconnect(self):
-        try:
-            self.com_port = self.port_name + str(self.port_number)
-            self.port_number += 1
-            if self.port_number > 10:
-                self.port_number = 0
-            self.serial_port = serial.Serial(self.com_port, 9600, timeout=0, parity=serial.PARITY_NONE, stopbits=1, bytesize=8)
-        except IOError as error:
-            print "SDL607 failed to reconnect on port {} with error: {}".format(self.com_port, str(error))
+    def recreate_serial_port(self):
+        success = False
+        for i in range(10):
+            try:
+                self.com_port = self.port_name + str(self.port_number)
+                self.port_number += 1
+                if self.port_number > 10:
+                    self.port_number = 0
+                self.serial_port = serial.Serial(self.com_port, 9600, timeout=0, parity=serial.PARITY_NONE, stopbits=1, bytesize=8)
+                success = True
+                break
+            except serial.serialutil.SerialException as error:
+                print "SDL607 failed to recreate on port {} with error: {}".format(self.com_port, str(error))
+
+        if not success:
+            print "SDL607 failed permanently"
 
     def get_values(self):
         try:
@@ -68,7 +76,7 @@ class SDL607(object):
                 return None
         except IOError as error:
             print "SDL607 failed to read value with error: {}".format(str(error))
-            self.reconnect()
+            self.recreate_serial_port()
 
 
 class FakeMeter(object):
