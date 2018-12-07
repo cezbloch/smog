@@ -42,25 +42,33 @@ def color_average_and_momentary(values, index):
     return text
 
 
+display_values = True
+
+
 def present_values_callback(values):
-    aqi = "AQI = " + color_average_and_momentary(values, 2)
+    if display_values:
+        aqi = "AQI = " + color_average_and_momentary(values, 2)
 
-    pm25 = " PM 2.5 = " + color_average_and_momentary(values, 0)
+        pm25 = " PM 2.5 = " + color_average_and_momentary(values, 0)
 
-    pm10 = " PM 10 = " + color_average_and_momentary(values, 1)
-    print aqi + pm25 + pm10
+        pm10 = " PM 10 = " + color_average_and_momentary(values, 1)
+        print aqi + pm25 + pm10
     sleep(0.5)
 
 
 def present_weather_callback(values):
-    print 'Temp: {0:0.1f} C  Humidity: {1:0.1f} %'.format(values.momentarily[0], values.momentarily[1])
+    if display_values:
+        print 'Temp: {0:0.1f} C  Humidity: {1:0.1f} %'.format(values.momentarily[0], values.momentarily[1])
 
 
 def main():
     init()
     parser = argparse.ArgumentParser(description='Air Monitor')
     parser.add_argument("location")
+    parser.add_argument('-s', '--silent', action='store_true')
     arguments = parser.parse_args()
+    global display_values
+    display_values = not arguments.silent
     config = read_config(arguments.location)
     engines = []
 
