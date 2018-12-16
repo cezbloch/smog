@@ -1,5 +1,7 @@
-# smog
-Air Quality Monitor application to monitor PM 2.5 and PM10 from SDL607 device. Easily extendable to handle any other device and push data into any storage. 
+
+Air Quality Monitor application to monitor PM 2.5 and PM10 from SDL607 device.
+Easily extendable to handle any other device and push data into any storage. 
+Support for DHT11 (temperature and pressure meter) added.
 
 ---------- create a deamon service launching at system start-up --------------
 sudo apt-get install daemontools daemontools-run
