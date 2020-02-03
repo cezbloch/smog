@@ -1,4 +1,4 @@
-import Tkinter
+import tkinter
 import argparse
 
 from Engine import AirMonitorEngine
@@ -8,9 +8,9 @@ from Metrics import get_aqi_color, get_2_5_color, get_10_color
 from DataTargets import create_data_target
 
 
-class AirMonitorGui(Tkinter.Tk):
+class AirMonitorGui(tkinter.Tk):
     def __init__(self):
-        Tkinter.Tk.__init__(self)
+        tkinter.Tk.__init__(self)
         self.initialize()
 
         parser = argparse.ArgumentParser(description='Air Monitor')
@@ -33,33 +33,33 @@ class AirMonitorGui(Tkinter.Tk):
         column_0 = 0
         column_1 = 1
         column_2 = 2
-        text_font = ("Courier", 50)
+        text_font = ("Courier",100)
 
-        self.label_aqi = Tkinter.Label(self, anchor="center", bg="black", font=text_font)
+        self.label_aqi = tkinter.Label(self, anchor="center", bg="black", font=text_font)
         self.label_aqi.grid(column=column_0, row=row_0, sticky='NESW')
 
-        self.label_pm25 = Tkinter.Label(self, anchor="center", bg="black", font=text_font)
+        self.label_pm25 = tkinter.Label(self, anchor="center", bg="black", font=text_font)
         self.label_pm25.grid(column=column_1, row=row_0, sticky='NESW')
 
-        self.label_pm10 = Tkinter.Label(self, anchor="center", bg="black", font=text_font)
+        self.label_pm10 = tkinter.Label(self, anchor="center", bg="black", font=text_font)
         self.label_pm10.grid(column=column_2, row=row_0, sticky='NESW')
 
-        self.label_aqi_now = Tkinter.Label(self, anchor="center", bg="black", font=text_font)
+        self.label_aqi_now = tkinter.Label(self, anchor="center", bg="black", font=text_font)
         self.label_aqi_now.grid(column=column_0, row=row_1, sticky='NESW')
 
-        self.label_pm25_now = Tkinter.Label(self, anchor="center", bg="black", font=text_font)
+        self.label_pm25_now = tkinter.Label(self, anchor="center", bg="black", font=text_font)
         self.label_pm25_now.grid(column=column_1, row=row_1, sticky='NESW')
 
-        self.label_pm10_now = Tkinter.Label(self, anchor="center", bg="black", font=text_font)
+        self.label_pm10_now = tkinter.Label(self, anchor="center", bg="black", font=text_font)
         self.label_pm10_now.grid(column=column_2, row=row_1, sticky='NESW')
 
-        self.label_aqi_avg = Tkinter.Label(self, anchor="center", bg="black", font=text_font)
+        self.label_aqi_avg = tkinter.Label(self, anchor="center", bg="black", font=text_font)
         self.label_aqi_avg.grid(column=column_0, row=row_2, sticky='NESW')
 
-        self.label_pm25_avg = Tkinter.Label(self, anchor="center", bg="black", font=text_font)
+        self.label_pm25_avg = tkinter.Label(self, anchor="center", bg="black", font=text_font)
         self.label_pm25_avg.grid(column=column_1, row=row_2, sticky='NESW')
 
-        self.label_pm10_avg = Tkinter.Label(self, anchor="center", bg="black", font=text_font)
+        self.label_pm10_avg = tkinter.Label(self, anchor="center", bg="black", font=text_font)
         self.label_pm10_avg.grid(column=column_2, row=row_2, sticky='NESW')
 
         self.grid_columnconfigure(column_0, weight=1)

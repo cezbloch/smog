@@ -1,4 +1,5 @@
-import urllib
+import urllib.parse
+import urllib.request
 
 
 def create_data_target(target_type, key):
@@ -22,11 +23,11 @@ class ThingSpeakTarget(object):
                 fields[field_name] = "%.1f" % value
                 field_id += 1
 
-            params = urllib.urlencode(fields)
-
-            f = urllib.urlopen("https://api.thingspeak.com/update", data=params)
+            params = urllib.parse.urlencode(fields).encode("utf-8")
+            url_request = urllib.request.Request("https://api.thingspeak.com/update")
+            urllib.request.urlopen(url_request, data=params)
         except Exception as e:
-            print "Failed to submit data to ThingSpeak, reason = " + str(e)
+            print(f"Failed to submit data to ThingSpeak, reason = {e}")
 
 
 class NullTarget(object):

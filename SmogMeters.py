@@ -48,10 +48,10 @@ class SDL607(object):
                 success = True
                 break
             except serial.serialutil.SerialException as error:
-                print "SDL607 failed to recreate on port {} with error: {}".format(self.com_port, str(error))
+                print(f"SDL607 failed to recreate on port {self.com_port} with error: {error}")
 
         if not success:
-            print "SDL607 failed permanently"
+            print("SDL607 failed permanently")
 
     def get_values(self):
         try:
@@ -75,7 +75,7 @@ class SDL607(object):
                     return [udata4_pm_25, udata6_pm_10]
                 return None
         except IOError as error:
-            print "SDL607 failed to read value with error: {}".format(str(error))
+            print(f"SDL607 failed to read value with error: {error}")
             self.recreate_serial_port()
 
 
