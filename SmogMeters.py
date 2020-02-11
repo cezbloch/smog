@@ -64,13 +64,13 @@ class SDL607(object):
                     self.buffer = self.buffer[m.end():]
                     udata = struct.unpack('<cHHHHHHHHcc', data)
 
-                    udata2 = udata[2] / 10.0
-                    udata3 = udata[3] / 10.0
+                    #udata2 = udata[2] / 10.0
+                    #udata3 = udata[3] / 10.0
                     udata4_pm_25 = udata[4] / 10.0
-                    udata5 = udata[5] / 10.0
+                    #udata5 = udata[5] / 10.0
                     udata6_pm_10 = udata[6] / 10.0
-                    udata7 = udata[7] / 10.0
-                    udata8 = udata[8] / 10.0
+                    #udata7 = udata[7] / 10.0
+                    #udata8 = udata[8] / 10.0
 
                     return [udata4_pm_25, udata6_pm_10]
                 return None
